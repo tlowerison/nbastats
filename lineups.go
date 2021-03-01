@@ -34,94 +34,94 @@ type LineupsFields struct {
 }
 
 func (c *NbaStatsClient) Lineups(fields *LineupsFields) (*model.Result, error) {
-  if fields.Conference == nil     { fields.Conference     = &Conference.Default }
-  if fields.DateFrom == nil       { fields.DateFrom       = &DateFrom.Default }
-  if fields.DateTo == nil         { fields.DateTo         = &DateTo.Default }
-  if fields.Division == nil       { fields.Division       = &Division.Default }
-  if fields.GameID == nil         { fields.GameID         = &GameID.Default }
-  if fields.GameSegment == nil    { fields.GameSegment    = &GameSegment.Default }
-  if fields.GroupQuantity == nil  { fields.GroupQuantity  = &GroupQuantity.Default }
-  if fields.LastNGames == nil     { fields.LastNGames     = &LastNGames.Default }
-  if fields.LeagueID == nil       { fields.LeagueID       = &LeagueID.Default }
-  if fields.Location == nil       { fields.Location       = &Location.Default }
-  if fields.MeasureType == nil    { fields.MeasureType    = &MeasureType.Default }
-  if fields.Month == nil          { fields.Month          = &Month.Default }
-  if fields.OpponentTeamID == nil { fields.OpponentTeamID = &OpponentTeamID.Default }
-  if fields.Outcome == nil        { fields.Outcome        = &Outcome.Default }
-  if fields.PORound == nil        { fields.PORound        = &PORound.Default }
-  if fields.PaceAdjust == nil     { fields.PaceAdjust     = &PaceAdjust.Default }
-  if fields.PerMode == nil        { fields.PerMode        = &PerMode.Default }
-  if fields.Period == nil         { fields.Period         = &Period.Default }
-  if fields.PlusMinus == nil      { fields.PlusMinus      = &PlusMinus.Default }
-  if fields.Rank == nil           { fields.Rank           = &Rank.Default }
-  if fields.Season == nil         { fields.Season         = &Season.Default }
-  if fields.SeasonSegment == nil  { fields.SeasonSegment  = &SeasonSegment.Default }
-  if fields.SeasonType == nil     { fields.SeasonType     = &SeasonType.Default }
-  if fields.ShotClockRange == nil { fields.ShotClockRange = &ShotClockRange.Default }
-  if fields.TeamID == nil         { fields.TeamID         = &TeamID.Default }
-  if fields.VsConference == nil   { fields.VsConference   = &VsConference.Default }
-  if fields.VsDivision == nil     { fields.VsDivision     = &VsDivision.Default }
+  if fields.Conference == nil     { fields.Conference     = &conference.Default }
+  if fields.DateFrom == nil       { fields.DateFrom       = &dateFrom.Default }
+  if fields.DateTo == nil         { fields.DateTo         = &dateTo.Default }
+  if fields.Division == nil       { fields.Division       = &division.Default }
+  if fields.GameID == nil         { fields.GameID         = &gameID.Default }
+  if fields.GameSegment == nil    { fields.GameSegment    = &gameSegment.Default }
+  if fields.GroupQuantity == nil  { fields.GroupQuantity  = &groupQuantity.Default }
+  if fields.LastNGames == nil     { fields.LastNGames     = &lastNGames.Default }
+  if fields.LeagueID == nil       { fields.LeagueID       = &leagueID.Default }
+  if fields.Location == nil       { fields.Location       = &location.Default }
+  if fields.MeasureType == nil    { fields.MeasureType    = &measureType.Default }
+  if fields.Month == nil          { fields.Month          = &month.Default }
+  if fields.OpponentTeamID == nil { fields.OpponentTeamID = &opponentTeamID.Default }
+  if fields.Outcome == nil        { fields.Outcome        = &outcome.Default }
+  if fields.PORound == nil        { fields.PORound        = &pORound.Default }
+  if fields.PaceAdjust == nil     { fields.PaceAdjust     = &paceAdjust.Default }
+  if fields.PerMode == nil        { fields.PerMode        = &perMode.Default }
+  if fields.Period == nil         { fields.Period         = &period.Default }
+  if fields.PlusMinus == nil      { fields.PlusMinus      = &plusMinus.Default }
+  if fields.Rank == nil           { fields.Rank           = &rank.Default }
+  if fields.Season == nil         { fields.Season         = &season.Default }
+  if fields.SeasonSegment == nil  { fields.SeasonSegment  = &seasonSegment.Default }
+  if fields.SeasonType == nil     { fields.SeasonType     = &seasonType.Default }
+  if fields.ShotClockRange == nil { fields.ShotClockRange = &shotClockRange.Default }
+  if fields.TeamID == nil         { fields.TeamID         = &teamID.Default }
+  if fields.VsConference == nil   { fields.VsConference   = &vsConference.Default }
+  if fields.VsDivision == nil     { fields.VsDivision     = &vsDivision.Default }
 
   // Validate
-  err := Conference.Assert(*fields.Conference);        if err != nil { return nil, err }
-  err = DateFrom.Assert(*fields.DateFrom);             if err != nil { return nil, err }
-  err = DateTo.Assert(*fields.DateTo);                 if err != nil { return nil, err }
-  err = Division.Assert(*fields.Division);             if err != nil { return nil, err }
-  err = GameID.Assert(*fields.GameID);                 if err != nil { return nil, err }
-  err = GameSegment.Assert(*fields.GameSegment);       if err != nil { return nil, err }
-  err = GroupQuantity.Assert(*fields.GroupQuantity);   if err != nil { return nil, err }
-  err = LastNGames.Assert(*fields.LastNGames);         if err != nil { return nil, err }
-  err = LeagueID.Assert(*fields.LeagueID);             if err != nil { return nil, err }
-  err = Location.Assert(*fields.Location);             if err != nil { return nil, err }
-  err = MeasureType.Assert(*fields.MeasureType);       if err != nil { return nil, err }
-  err = Month.Assert(*fields.Month);                   if err != nil { return nil, err }
-  err = OpponentTeamID.Assert(*fields.OpponentTeamID); if err != nil { return nil, err }
-  err = Outcome.Assert(*fields.Outcome);               if err != nil { return nil, err }
-  err = PORound.Assert(*fields.PORound);               if err != nil { return nil, err }
-  err = PaceAdjust.Assert(*fields.PaceAdjust);         if err != nil { return nil, err }
-  err = PerMode.Assert(*fields.PerMode);               if err != nil { return nil, err }
-  err = Period.Assert(*fields.Period);                 if err != nil { return nil, err }
-  err = PlusMinus.Assert(*fields.PlusMinus);           if err != nil { return nil, err }
-  err = Rank.Assert(*fields.Rank);                     if err != nil { return nil, err }
-  err = Season.Assert(*fields.Season);                 if err != nil { return nil, err }
-  err = SeasonSegment.Assert(*fields.SeasonSegment);   if err != nil { return nil, err }
-  err = SeasonType.Assert(*fields.SeasonType);         if err != nil { return nil, err }
-  err = ShotClockRange.Assert(*fields.ShotClockRange); if err != nil { return nil, err }
-  err = TeamID.Assert(*fields.TeamID);                 if err != nil { return nil, err }
-  err = VsConference.Assert(*fields.VsConference);     if err != nil { return nil, err }
-  err = VsDivision.Assert(*fields.VsDivision);         if err != nil { return nil, err }
+  err := conference.Assert(*fields.Conference);        if err != nil { return nil, err }
+  err = dateFrom.Assert(*fields.DateFrom);             if err != nil { return nil, err }
+  err = dateTo.Assert(*fields.DateTo);                 if err != nil { return nil, err }
+  err = division.Assert(*fields.Division);             if err != nil { return nil, err }
+  err = gameID.Assert(*fields.GameID);                 if err != nil { return nil, err }
+  err = gameSegment.Assert(*fields.GameSegment);       if err != nil { return nil, err }
+  err = groupQuantity.Assert(*fields.GroupQuantity);   if err != nil { return nil, err }
+  err = lastNGames.Assert(*fields.LastNGames);         if err != nil { return nil, err }
+  err = leagueID.Assert(*fields.LeagueID);             if err != nil { return nil, err }
+  err = location.Assert(*fields.Location);             if err != nil { return nil, err }
+  err = measureType.Assert(*fields.MeasureType);       if err != nil { return nil, err }
+  err = month.Assert(*fields.Month);                   if err != nil { return nil, err }
+  err = opponentTeamID.Assert(*fields.OpponentTeamID); if err != nil { return nil, err }
+  err = outcome.Assert(*fields.Outcome);               if err != nil { return nil, err }
+  err = pORound.Assert(*fields.PORound);               if err != nil { return nil, err }
+  err = paceAdjust.Assert(*fields.PaceAdjust);         if err != nil { return nil, err }
+  err = perMode.Assert(*fields.PerMode);               if err != nil { return nil, err }
+  err = period.Assert(*fields.Period);                 if err != nil { return nil, err }
+  err = plusMinus.Assert(*fields.PlusMinus);           if err != nil { return nil, err }
+  err = rank.Assert(*fields.Rank);                     if err != nil { return nil, err }
+  err = season.Assert(*fields.Season);                 if err != nil { return nil, err }
+  err = seasonSegment.Assert(*fields.SeasonSegment);   if err != nil { return nil, err }
+  err = seasonType.Assert(*fields.SeasonType);         if err != nil { return nil, err }
+  err = shotClockRange.Assert(*fields.ShotClockRange); if err != nil { return nil, err }
+  err = teamID.Assert(*fields.TeamID);                 if err != nil { return nil, err }
+  err = vsConference.Assert(*fields.VsConference);     if err != nil { return nil, err }
+  err = vsDivision.Assert(*fields.VsDivision);         if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",
     Endpoint:   "/leaguedashlineups",
     Fields:     &map[string]string{
-      "Conference":     Conference.FromPtr(fields.Conference),
-      "DateFrom":       DateFrom.FromPtr(fields.DateFrom),
-      "DateTo":         DateTo.FromPtr(fields.DateTo),
-      "Division":       Division.FromPtr(fields.Division),
-      "GameID":         GameID.FromPtr(fields.GameID),
-      "GameSegment":    GameSegment.FromPtr(fields.GameSegment),
-      "GroupQuantity":  GroupQuantity.FromPtr(fields.GroupQuantity),
-      "LastNGames":     LastNGames.FromPtr(fields.LastNGames),
-      "LeagueID":       LeagueID.FromPtr(fields.LeagueID),
-      "Location":       Location.FromPtr(fields.Location),
-      "MeasureType":    MeasureType.FromPtr(fields.MeasureType),
-      "Month":          Month.FromPtr(fields.Month),
-      "OpponentTeamID": OpponentTeamID.FromPtr(fields.OpponentTeamID),
-      "Outcome":        Outcome.FromPtr(fields.Outcome),
-      "PORound":        PORound.FromPtr(fields.PORound),
-      "PaceAdjust":     PaceAdjust.FromPtr(fields.PaceAdjust),
-      "PerMode":        PerMode.FromPtr(fields.PerMode),
-      "Period":         Period.FromPtr(fields.Period),
-      "PlusMinus":      PlusMinus.FromPtr(fields.PlusMinus),
-      "Rank":           Rank.FromPtr(fields.Rank),
-      "Season":         Season.FromPtr(fields.Season),
-      "SeasonSegment":  SeasonSegment.FromPtr(fields.SeasonSegment),
-      "SeasonType":     SeasonType.FromPtr(fields.SeasonType),
-      "ShotClockRange": ShotClockRange.FromPtr(fields.ShotClockRange),
-      "TeamID":         TeamID.FromPtr(fields.TeamID),
-      "VsConference":   VsConference.FromPtr(fields.VsConference),
-      "VsDivision":     VsDivision.FromPtr(fields.VsDivision),
+      "Conference":     conference.FromPtr(fields.Conference),
+      "DateFrom":       dateFrom.FromPtr(fields.DateFrom),
+      "DateTo":         dateTo.FromPtr(fields.DateTo),
+      "Division":       division.FromPtr(fields.Division),
+      "GameID":         gameID.FromPtr(fields.GameID),
+      "GameSegment":    gameSegment.FromPtr(fields.GameSegment),
+      "GroupQuantity":  groupQuantity.FromPtr(fields.GroupQuantity),
+      "LastNGames":     lastNGames.FromPtr(fields.LastNGames),
+      "LeagueID":       leagueID.FromPtr(fields.LeagueID),
+      "Location":       location.FromPtr(fields.Location),
+      "MeasureType":    measureType.FromPtr(fields.MeasureType),
+      "Month":          month.FromPtr(fields.Month),
+      "OpponentTeamID": opponentTeamID.FromPtr(fields.OpponentTeamID),
+      "Outcome":        outcome.FromPtr(fields.Outcome),
+      "PORound":        pORound.FromPtr(fields.PORound),
+      "PaceAdjust":     paceAdjust.FromPtr(fields.PaceAdjust),
+      "PerMode":        perMode.FromPtr(fields.PerMode),
+      "Period":         period.FromPtr(fields.Period),
+      "PlusMinus":      plusMinus.FromPtr(fields.PlusMinus),
+      "Rank":           rank.FromPtr(fields.Rank),
+      "Season":         season.FromPtr(fields.Season),
+      "SeasonSegment":  seasonSegment.FromPtr(fields.SeasonSegment),
+      "SeasonType":     seasonType.FromPtr(fields.SeasonType),
+      "ShotClockRange": shotClockRange.FromPtr(fields.ShotClockRange),
+      "TeamID":         teamID.FromPtr(fields.TeamID),
+      "VsConference":   vsConference.FromPtr(fields.VsConference),
+      "VsDivision":     vsDivision.FromPtr(fields.VsDivision),
     },
   })
   if err != nil {

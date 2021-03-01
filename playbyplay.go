@@ -11,21 +11,21 @@ type PlayByPlayFields struct {
 }
 
 func (c *NbaStatsClient) PlayByPlay(fields *PlayByPlayFields) (*model.Result, error) {
-  if fields.EndPeriod == nil   { fields.EndPeriod   = &EndPeriod.Default }
-  if fields.StartPeriod == nil { fields.StartPeriod = &StartPeriod.Default }
+  if fields.EndPeriod == nil   { fields.EndPeriod   = &endPeriod.Default }
+  if fields.StartPeriod == nil { fields.StartPeriod = &startPeriod.Default }
 
   // Validate
-  err := EndPeriod.Assert(*fields.EndPeriod);    if err != nil { return nil, err }
-  err = GameID.Assert(fields.GameID);            if err != nil { return nil, err }
-  err = StartPeriod.Assert(*fields.StartPeriod); if err != nil { return nil, err }
+  err := endPeriod.Assert(*fields.EndPeriod);    if err != nil { return nil, err }
+  err = gameID.Assert(fields.GameID);            if err != nil { return nil, err }
+  err = startPeriod.Assert(*fields.StartPeriod); if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",
     Endpoint:   "/playbyplayv2",
     Fields:     &map[string]string{
-      "EndPeriod":   EndPeriod.FromPtr(fields.EndPeriod),
-      "GameID":      GameID.FromVal(fields.GameID),
-      "StartPeriod": StartPeriod.FromPtr(fields.StartPeriod),
+      "EndPeriod":   endPeriod.FromPtr(fields.EndPeriod),
+      "GameID":      gameID.FromVal(fields.GameID),
+      "StartPeriod": startPeriod.FromPtr(fields.StartPeriod),
     },
   })
   if err != nil {

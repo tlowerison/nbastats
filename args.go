@@ -3,7 +3,7 @@ package nbastats
 import "github.com/tlowerison/nbastats/model"
 
 var (
-  College = model.ArgEnum{
+  college = model.ArgEnum{
     Name:    "College",
     Options: []string{
       "High School",
@@ -575,17 +575,17 @@ var (
       "Youngstown State",
     },
   }
-  Conference = model.ArgEnum{
+  conference = model.ArgEnum{
     Name:    "Conference",
     Options: []string{"East", "West"},
   }
-  Counter = model.ArgInt{
+  counter = model.ArgInt{
     Name:   "Counter",
     Default: 2160,
     Min:     model.IntPtr(1),
     Max:     model.IntPtr(10000),
   }
-  Country = model.ArgEnum{
+  country = model.ArgEnum{
     Name:    "Country",
     Options: []string{
       "International",
@@ -652,22 +652,22 @@ var (
       "Yugoslavia",
     },
   }
-  DateFrom = model.ArgDateTime{
+  dateFrom = model.ArgDateTime{
     Name: "DateFrom",
   }
-  DayOffset = model.ArgInt{
+  dayOffset = model.ArgInt{
     Name:   "DayOffset",
     Min:     model.IntPtr(0),
   }
-  DateTo = model.ArgDateTime{
+  dateTo = model.ArgDateTime{
     Name: "DateTo",
   }
-  Direction = model.ArgEnum{
+  direction = model.ArgEnum{
     Name:    "Direction",
     Default: "DESC",
     Options: []string{"DESC", "ASC"},
   }
-  Division = model.ArgEnum{
+  division = model.ArgEnum{
     Name:    "Division",
     Options: []string{
       "Atlantic",
@@ -680,7 +680,7 @@ var (
       "West",
     },
   }
-  DraftPick = model.ArgEnum{
+  draftPick = model.ArgEnum{
     Name:    "DraftPick",
     Options: []string{
       "All Draft Rounds",
@@ -698,26 +698,26 @@ var (
       "Undrafted",
     },
   }
-  DraftYear = model.ArgInt{
+  draftYear = model.ArgInt{
     Name: "DraftYear",
     Min:  model.IntPtr(1947),
     Max:  model.IntPtr(2020),
   }
-  EndPeriod = model.ArgInt{
+  endPeriod = model.ArgInt{
     Name:    "EndPeriod",
     Min:     model.IntPtr(0),
     Max:     model.IntPtr(4),
   }
-  GameDate = model.ArgDateTime{
+  gameDate = model.ArgDateTime{
     Name: "GameDate",
   }
-  GameID = model.ArgString{
+  gameID = model.ArgString{
     Name: "GameID",
   }
-  GameScope = model.ArgString{
+  gameScope = model.ArgString{
     Name: "GameScope",
   }
-  GameSegment = model.ArgEnum{
+  gameSegment = model.ArgEnum{
     Name:    "GameSegment",
     Options: []string{
       "First Half",
@@ -725,13 +725,13 @@ var (
       "Overtime",
     },
   }
-  GroupQuantity = model.ArgInt{
+  groupQuantity = model.ArgInt{
     Name:    "GroupQuantity",
     Default: 5,
     Min:     model.IntPtr(2),
     Max:     model.IntPtr(5),
   }
-  Height = model.ArgEnum{
+  height = model.ArgEnum{
     Name:    "Height",
     Options: []string{
       "< 6-0",
@@ -746,26 +746,26 @@ var (
       "> 7-0",
     },
   }
-  IsOnlyCurrentSeason = model.ArgEnum{
+  isOnlyCurrentSeason = model.ArgEnum{
     Name: "IsOnlyCurrentSeason",
     Default: "Y",
     Options: []string{"Y", "N"},
   }
-  LastNGames = model.ArgInt{
+  lastNGames = model.ArgInt{
     Name: "LastNGames",
     Min:  model.IntPtr(0),
     Max:  model.IntPtr(2147483647),
   }
-  LeagueID = model.ArgEnum{
+  leagueID = model.ArgEnum{
     Name:    "LeagueID",
     Default: "00",
     Options: []string{"00", "20"},
   }
-  Location = model.ArgEnum{
+  location = model.ArgEnum{
     Name: "Location",
     Options: []string{"Home", "Road"},
   }
-  MeasureType = model.ArgEnum{
+  measureType = model.ArgEnum{
     Name: "MeasureType",
     Default: "Base",
     Options: []string{
@@ -779,30 +779,30 @@ var (
       "Usage",
     },
   }
-  Month = model.ArgInt{
+  month = model.ArgInt{
     Name: "Month",
     Min:  model.IntPtr(0),
     Max:  model.IntPtr(12),
   }
-  OpponentTeamID = model.ArgString{
+  opponentTeamID = model.ArgString{
     Name:    "OpponentTeamID",
     Default: "0",
   }
-  Outcome = model.ArgEnum{
+  outcome = model.ArgEnum{
     Name:    "Outcome",
     Options: []string{"W", "L"},
   }
-  PORound = model.ArgInt{
+  pORound = model.ArgInt{
     Name: "PORound",
     Min:  model.IntPtr(0),
     Max:  model.IntPtr(4),
   }
-  PaceAdjust = model.ArgEnum{
+  paceAdjust = model.ArgEnum{
     Name:    "PaceAdjust",
     Default: "N",
     Options: []string{"Y", "N"},
   }
-  PerMode = model.ArgEnum{
+  perMode = model.ArgEnum{
     Name:    "PerMode",
     Default: "PerGame",
     Options: []string{
@@ -819,12 +819,12 @@ var (
       "Per100Plays",
     },
   }
-  Period = model.ArgInt{
+  period = model.ArgInt{
     Name: "Period",
     Min:  model.IntPtr(0),
     Max:  model.IntPtr(4),
   }
-  PlayerExperience = model.ArgEnum{
+  playerExperience = model.ArgEnum{
     Name: "PlayerExperience",
     Options: []string{
       "Rookie",
@@ -832,7 +832,7 @@ var (
       "Veteran",
     },
   }
-  PlayerPosition = model.ArgEnum{
+  playerPosition = model.ArgEnum{
     Name: "PlayerPosition",
     Options: []string{
       "Center",
@@ -840,25 +840,25 @@ var (
       "Guard",
     },
   }
-  PlayerID = model.ArgString{
+  playerID = model.ArgString{
     Name: "PlayerID",
     Default: "0",
   }
-  PlayerOrTeam = model.ArgEnum{
+  playerOrTeam = model.ArgEnum{
     Name:    "PlayerOrTeam",
     Options: []string{"T", "P"},
   }
-  PlusMinus = model.ArgEnum{
+  plusMinus = model.ArgEnum{
     Name:    "PlusMinus",
     Default: "N",
     Options: []string{"Y", "N"},
   }
-  Rank = model.ArgEnum{
+  rank = model.ArgEnum{
     Name: "Rank",
     Default: "N",
     Options: []string{"Y", "N"},
   }
-  Season = model.ArgEnum{
+  season = model.ArgEnum{
     Name:    "Season",
     Default: "2020-21",
     Options: []string{
@@ -889,14 +889,14 @@ var (
       "1996-97",
     },
   }
-  SeasonSegment = model.ArgEnum{
+  seasonSegment = model.ArgEnum{
     Name:    "SeasonSegment",
     Options: []string{
       "Pre All-Star",
       "Post All-Star",
     },
   }
-  SeasonType = model.ArgEnum{
+  seasonType = model.ArgEnum{
     Name:    "SeasonType",
     Default: "Regular Season",
     Options: []string{
@@ -906,7 +906,7 @@ var (
       "All Star",
     },
   }
-  ShotClockRange = model.ArgEnum{
+  shotClockRange = model.ArgEnum{
     Name:    "ShotClockRange",
     Options: []string{
       "24-22",
@@ -918,42 +918,42 @@ var (
       "ShotClock Off",
     },
   }
-  Sorter = model.ArgEnum{
+  sorter = model.ArgEnum{
     Name: "Sorter",
     Default: "DATE",
     Options: []string{"DATE"},
   }
-  Split = model.ArgEnum{
+  split = model.ArgEnum{
     Name:    "Split",
     Default: "general",
     Options: []string{"general"},
   }
-  StarterBench = model.ArgEnum{
+  starterBench = model.ArgEnum{
     Name:    "StarterBench",
     Options: []string{
       "Starters",
       "Bench",
     },
   }
-  StartPeriod = model.ArgInt{
+  startPeriod = model.ArgInt{
     Name:    "StartPeriod",
     Min:     model.IntPtr(0),
     Max:     model.IntPtr(4),
   }
-  TeamID = model.ArgString{
+  teamID = model.ArgString{
     Name:    "TeamID",
     Default: "0",
   }
-  TwoWay = model.ArgInt{
+  twoWay = model.ArgInt{
     Name: "TwoWay",
     Min:  model.IntPtr(0),
     Max:  model.IntPtr(1),
   }
-  VsConference = model.ArgEnum{
+  vsConference = model.ArgEnum{
     Name:    "VsConference",
     Options: []string{"East", "West"},
   }
-  VsDivision = model.ArgEnum{
+  vsDivision = model.ArgEnum{
     Name:    "VsDivision",
     Options: []string{
       "Atlantic",
@@ -966,7 +966,7 @@ var (
       "West",
     },
   }
-  Weight = model.ArgEnum{
+  weight = model.ArgEnum{
     Name:    "Weight",
     Options: []string{
       "< 200",

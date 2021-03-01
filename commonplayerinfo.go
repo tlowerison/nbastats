@@ -9,13 +9,13 @@ type CommonPlayerInfoFields struct {
 
 func (c *NbaStatsClient) CommonPlayerInfo(fields *CommonPlayerInfoFields) (*model.Result, error) {
   // Validate
-  err := PlayerID.Assert(fields.PlayerID); if err != nil { return nil, err }
+  err := playerID.Assert(fields.PlayerID); if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",
     Endpoint:   "/commonplayerinfo",
     Fields:     &map[string]string{
-      "PlayerID": PlayerID.FromVal(fields.PlayerID),
+      "PlayerID": playerID.FromVal(fields.PlayerID),
     },
   })
   if err != nil {

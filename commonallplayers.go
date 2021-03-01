@@ -10,22 +10,22 @@ type CommonAllPlayersFields struct {
 }
 
 func (c *NbaStatsClient) CommonAllPlayers(fields *CommonAllPlayersFields) (*model.Result, error) {
-  if fields.IsOnlyCurrentSeason == nil { fields.IsOnlyCurrentSeason = &IsOnlyCurrentSeason.Default }
-  if fields.LeagueID == nil            { fields.LeagueID            = &LeagueID.Default }
-  if fields.Season == nil              { fields.Season              = &Season.Default }
+  if fields.IsOnlyCurrentSeason == nil { fields.IsOnlyCurrentSeason = &isOnlyCurrentSeason.Default }
+  if fields.LeagueID == nil            { fields.LeagueID            = &leagueID.Default }
+  if fields.Season == nil              { fields.Season              = &season.Default }
 
   // Validate
-  err := IsOnlyCurrentSeason.Assert(*fields.IsOnlyCurrentSeason); if err != nil { return nil, err }
-  err = LeagueID.Assert(*fields.LeagueID);                        if err != nil { return nil, err }
-  err = Season.Assert(*fields.Season);                            if err != nil { return nil, err }
+  err := isOnlyCurrentSeason.Assert(*fields.IsOnlyCurrentSeason); if err != nil { return nil, err }
+  err = leagueID.Assert(*fields.LeagueID);                        if err != nil { return nil, err }
+  err = season.Assert(*fields.Season);                            if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",
     Endpoint:   "/commonallplayers",
     Fields:     &map[string]string{
-      "IsOnlyCurrentSeason": IsOnlyCurrentSeason.FromPtr(fields.IsOnlyCurrentSeason),
-      "LeagueID":            LeagueID.FromPtr(fields.LeagueID),
-      "Season":              Season.FromPtr(fields.Season),
+      "IsOnlyCurrentSeason": isOnlyCurrentSeason.FromPtr(fields.IsOnlyCurrentSeason),
+      "LeagueID":            leagueID.FromPtr(fields.LeagueID),
+      "Season":              season.FromPtr(fields.Season),
     },
   })
   if err != nil {
