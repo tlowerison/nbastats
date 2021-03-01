@@ -9,15 +9,46 @@ import (
   "strings"
 )
 
-type Client struct {
-  Name        string
+type DataSource struct {
   BaseUrl     string
   BaseHeaders map[string]string
 }
 
+type Result struct {
+  Headers []string        `json:"headers"`
+  Rows    [][]interface{} `json:"rowSet"`
+}
+
+func (r *Result) String() string {
+  if r == nil {
+    return ""
+  }
+  separator := "\t"
+  output := strings.Join(r.Headers, separator)
+  strRows := make([]string, len(r.Rows))
+  for i, row := range r.Rows {
+    strRow := make([]string, len(row))
+    for j, entry := range row {
+      strRow[j] = fmt.Sprintf("%v", entry)
+    }
+    strRows[i] = strings.Join(strRow, separator)
+  }
+  output += strings.Join(strRows, "\n")
+  return output
+}
+
+type FetchFunc func(fields map[string]interface{}) (*Result, error)
+
+type Client struct {
+  DataSources map[string]DataSource
+  FetchFuncs  map[string]FetchFunc
+  Fetch       func(endpoint string, fields map[string]interface{}) (*Result, error)
+  ShouldLog   bool
+}
+
 type ArgDateTime struct {
   Name    string
-  Default *string
+  Default string
 }
 
 func (a ArgDateTime) Assert(value string) error {
@@ -36,13 +67,27 @@ func (a ArgDateTime) Assert(value string) error {
   return nil
 }
 
+func (a ArgDateTime) FromVal(value string) string {
+  return value
+}
+
+func (a ArgDateTime) FromPtr(ptr *string) string {
+  if ptr == nil {
+    return ""
+  }
+  return *ptr
+}
+
 type ArgEnum struct {
   Name    string
-  Default *string
+  Default string
   Options []string
 }
 
 func (a ArgEnum) Assert(value string) error {
+  if value == "" {
+    return nil
+  }
   for _, option := range a.Options {
     if value == option {
       return nil
@@ -51,14 +96,42 @@ func (a ArgEnum) Assert(value string) error {
   return fmt.Errorf("Invalid %s (type enum): Expected to be in {%s}, received %s", a.Name, strings.Join(a.Options, ","), value)
 }
 
+func (a ArgEnum) FromVal(value string) string {
+  return value
+}
+
+func (a ArgEnum) FromValAsInt(value string) string {
+  if value == "" {
+    return "0"
+  }
+  return a.FromVal(value)
+}
+
+func (a ArgEnum) FromPtr(ptr *string) string {
+  if ptr == nil {
+    return ""
+  }
+  return *ptr
+}
+
+func (a ArgEnum) FromPtrAsInt(ptr *string) string {
+  if ptr == nil {
+    return "0"
+  }
+  return a.FromValAsInt(*ptr)
+}
+
 type ArgInt struct {
   Name    string
-  Default *int
+  Default int
   Min     *int
   Max     *int
 }
 
 func (a ArgInt) Assert(value int) error {
+  if value == 0 {
+    return nil
+  }
   if a.Min != nil && value < *a.Min {
     return fmt.Errorf("Invalid %s (type int): Expected >= %d, received %d", a.Name, *a.Min, value)
   }
@@ -68,14 +141,42 @@ func (a ArgInt) Assert(value int) error {
   return nil
 }
 
+func (a ArgInt) FromVal(value int) string {
+  return strconv.Itoa(value)
+}
+
+func (a ArgInt) FromValAsStr(value int) string {
+  if value == 0 {
+    return ""
+  }
+  return a.FromVal(value)
+}
+
+func (a ArgInt) FromPtr(ptr *int) string {
+  if ptr == nil {
+    return "0"
+  }
+  return strconv.Itoa(*ptr)
+}
+
+func (a ArgInt) FromPtrAsStr(ptr *int) string {
+  if ptr == nil {
+    return ""
+  }
+  return a.FromValAsStr(*ptr)
+}
+
 type ArgString struct {
   Name    string
-  Default *string
+  Default string
   // Assumes strict match (i.e. Regexp = "abc" is matched for "^abc$"
   Regexp  *string
 }
 
 func (a ArgString) Assert(value string) error {
+  if value == "" {
+    return nil
+  }
   if a.Regexp == nil {
     return nil
   }
@@ -87,32 +188,68 @@ func (a ArgString) Assert(value string) error {
   return nil
 }
 
-type FetchConfig struct {
-  Endpoint string
-  Fields   *map[string]string
-  Headers  *map[string]string
-  Params   *map[string]string
+func (a ArgString) FromVal(value string) string {
+  return value
 }
 
-func (c *Client) Fetch(config FetchConfig) ([]byte, error) {
-  url := fmt.Sprintf("%s%s", c.BaseUrl, config.Endpoint)
+func (a ArgString) FromValAsInt(value string) string {
+  if value == "" {
+    return "0"
+  }
+  return a.FromVal(value)
+}
+
+func (a ArgString) FromPtr(ptr *string) string {
+  if ptr == nil {
+    return ""
+  }
+  return *ptr
+}
+
+func (a ArgString) FromPtrAsInt(ptr *string) string {
+  if ptr == nil {
+    return "0"
+  }
+  return a.FromValAsInt(*ptr)
+}
+
+type FetchConfig struct {
+  DataSource string
+  Endpoint   string
+  Fields     *map[string]string
+  Headers    *map[string]string
+  Params     *map[string]string
+}
+
+func removeSpaces(value string, newSpace string) string {
+  return strings.ReplaceAll(value, " ", newSpace)
+}
+
+func (c *Client) Get(config FetchConfig) ([]byte, error) {
+  if _, ok := c.DataSources[config.DataSource]; !ok {
+    return nil, fmt.Errorf("Invalid datasource, received %s", config.DataSource)
+  }
+  dataSource := c.DataSources[config.DataSource]
+
+  url := fmt.Sprintf("%s%s", dataSource.BaseUrl, config.Endpoint)
 
   if config.Params != nil {
     for key, value := range *config.Params {
-      url = strings.ReplaceAll(url, fmt.Sprintf(":%s", key), value)
+      // Not sure if we want to replace space in params with +
+      url = strings.ReplaceAll(url, fmt.Sprintf(":%s", key), removeSpaces(value, "+"))
     }
   }
 
   if config.Fields != nil && len(*config.Fields) > 0 {
     pairs := []string{}
     for key, value := range *config.Fields {
-      pairs = append(pairs, fmt.Sprintf("%s=%s", key, value))
+      pairs = append(pairs, fmt.Sprintf("%s=%s", key, removeSpaces(value, "+")))
     }
     url = fmt.Sprintf("%s?%s", url, strings.Join(pairs, "&"))
   }
 
   mergedHeaders := map[string][]string{}
-  for key, value := range c.BaseHeaders {
+  for key, value := range dataSource.BaseHeaders {
     mergedHeaders[key] = []string{value}
   }
   if config.Headers != nil {
@@ -127,6 +264,10 @@ func (c *Client) Fetch(config FetchConfig) ([]byte, error) {
   }
   req.Header = mergedHeaders
 
+  if c.ShouldLog && req.URL != nil {
+    fmt.Printf("GET %s\n", req.URL.String())
+  }
+
   res, err := http.DefaultClient.Do(req)
   if err != nil {
     return nil, err
@@ -136,6 +277,10 @@ func (c *Client) Fetch(config FetchConfig) ([]byte, error) {
   res.Body.Close()
   if err != nil {
     return nil, err
+  }
+
+  if c.ShouldLog && data != nil {
+    fmt.Println(string(data))
   }
 
   return data, nil
