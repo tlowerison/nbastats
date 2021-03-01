@@ -10,7 +10,7 @@ type NbaStatsClient struct {
   *model.Client
 }
 
-func NewClient(shouldLog bool) *NbaStatsClient {
+func NewClient() *NbaStatsClient {
   return &NbaStatsClient{&model.Client{
     DataSources: map[string]model.DataSource{
       "stats.nba.com": {
@@ -44,7 +44,7 @@ func NewClient(shouldLog bool) *NbaStatsClient {
         },
       },
     },
-    ShouldLog: shouldLog,
+    ShouldLog: false,
   }}
 }
 
