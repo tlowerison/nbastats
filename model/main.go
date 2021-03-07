@@ -33,8 +33,11 @@ func (r *Result) String() string {
     }
     strRows[i] = strings.Join(strRow, separator)
   }
+  if len(strRows) > 0 {
+    output += "\n"
+  }
   output += strings.Join(strRows, "\n")
-  return output
+  return output + "\n"
 }
 
 type FetchFunc func(fields map[string]interface{}) (*Result, error)
