@@ -15,9 +15,9 @@ func (c *NbaStatsClient) CommonAllPlayers(fields *CommonAllPlayersFields) (*mode
   if fields.Season == nil              { fields.Season              = &season.Default }
 
   // Validate
-  err := isOnlyCurrentSeason.Assert(*fields.IsOnlyCurrentSeason); if err != nil { return nil, err }
-  err = leagueID.Assert(*fields.LeagueID);                        if err != nil { return nil, err }
-  err = season.Assert(*fields.Season);                            if err != nil { return nil, err }
+  err := isOnlyCurrentSeason.Assert(*fields.IsOnlyCurrentSeason, false); if err != nil { return nil, err }
+  err = leagueID.Assert(*fields.LeagueID, false);                        if err != nil { return nil, err }
+  err = season.Assert(*fields.Season, false);                            if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",

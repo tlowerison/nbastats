@@ -27,15 +27,15 @@ func (c *NbaStatsClient) TeamGameLog(fields *TeamGameLogFields) (*model.Result, 
   if fields.Sorter == nil     { fields.Sorter     = &sorter.Default }
 
   // Validate
-  err := teamID.Assert(fields.TeamID);         if err != nil { return nil, err }
-  err = counter.Assert(*fields.Counter);       if err != nil { return nil, err }
-  err = dateFrom.Assert(*fields.DateFrom);     if err != nil { return nil, err }
-  err = dateTo.Assert(*fields.DateTo);         if err != nil { return nil, err }
-  err = direction.Assert(*fields.Direction);   if err != nil { return nil, err }
-  err = leagueID.Assert(*fields.LeagueID);     if err != nil { return nil, err }
-  err = season.Assert(*fields.Season);         if err != nil { return nil, err }
-  err = seasonType.Assert(*fields.SeasonType); if err != nil { return nil, err }
-  err = sorter.Assert(*fields.Sorter);         if err != nil { return nil, err }
+  err := teamID.Assert(fields.TeamID, true);          if err != nil { return nil, err }
+  err = counter.Assert(*fields.Counter, false);       if err != nil { return nil, err }
+  err = dateFrom.Assert(*fields.DateFrom, false);     if err != nil { return nil, err }
+  err = dateTo.Assert(*fields.DateTo, false);         if err != nil { return nil, err }
+  err = direction.Assert(*fields.Direction, false);   if err != nil { return nil, err }
+  err = leagueID.Assert(*fields.LeagueID, false);     if err != nil { return nil, err }
+  err = season.Assert(*fields.Season, false);         if err != nil { return nil, err }
+  err = seasonType.Assert(*fields.SeasonType, false); if err != nil { return nil, err }
+  err = sorter.Assert(*fields.Sorter, false);         if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",

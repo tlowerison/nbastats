@@ -54,8 +54,8 @@ type ArgDateTime struct {
   Default string
 }
 
-func (a ArgDateTime) Assert(value string) error {
-  if value == "" {
+func (a ArgDateTime) Assert(value string, required bool) error {
+  if value == "" && !required {
     return nil
   }
   nums := strings.Split(value, "-")
@@ -87,8 +87,8 @@ type ArgEnum struct {
   Options []string
 }
 
-func (a ArgEnum) Assert(value string) error {
-  if value == "" {
+func (a ArgEnum) Assert(value string, required bool) error {
+  if value == "" && !required {
     return nil
   }
   for _, option := range a.Options {
@@ -131,8 +131,8 @@ type ArgInt struct {
   Max     *int
 }
 
-func (a ArgInt) Assert(value int) error {
-  if value == 0 {
+func (a ArgInt) Assert(value int, required bool) error {
+  if value == 0 && !required {
     return nil
   }
   if a.Min != nil && value < *a.Min {
@@ -176,8 +176,8 @@ type ArgString struct {
   Regexp  *string
 }
 
-func (a ArgString) Assert(value string) error {
-  if value == "" {
+func (a ArgString) Assert(value string, required bool) error {
+  if value == "" && !required {
     return nil
   }
   if a.Regexp == nil {

@@ -15,9 +15,9 @@ func (c *NbaStatsClient) PlayByPlay(fields *PlayByPlayFields) (*model.Result, er
   if fields.StartPeriod == nil { fields.StartPeriod = &startPeriod.Default }
 
   // Validate
-  err := endPeriod.Assert(*fields.EndPeriod);    if err != nil { return nil, err }
-  err = gameID.Assert(fields.GameID);            if err != nil { return nil, err }
-  err = startPeriod.Assert(*fields.StartPeriod); if err != nil { return nil, err }
+  err := endPeriod.Assert(*fields.EndPeriod, true);     if err != nil { return nil, err }
+  err = gameID.Assert(fields.GameID, false);            if err != nil { return nil, err }
+  err = startPeriod.Assert(*fields.StartPeriod, false); if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",

@@ -57,30 +57,30 @@ func (c *NbaStatsClient) TeamDashboard(fields *TeamDashboardFields) (*model.Resu
   if fields.VsDivision == nil     { fields.VsDivision     = &vsDivision.Default }
 
   // Validate
-  err := teamID.Assert(fields.TeamID);                 if err != nil { return nil, err }
-  err = dateFrom.Assert(*fields.DateFrom);             if err != nil { return nil, err }
-  err = dateTo.Assert(*fields.DateTo);                 if err != nil { return nil, err }
-  err = gameSegment.Assert(*fields.GameSegment);       if err != nil { return nil, err }
-  err = lastNGames.Assert(*fields.LastNGames);         if err != nil { return nil, err }
-  err = leagueID.Assert(*fields.LeagueID);             if err != nil { return nil, err }
-  err = location.Assert(*fields.Location);             if err != nil { return nil, err }
-  err = measureType.Assert(*fields.MeasureType);       if err != nil { return nil, err }
-  err = month.Assert(*fields.Month);                   if err != nil { return nil, err }
-  err = opponentTeamID.Assert(*fields.OpponentTeamID); if err != nil { return nil, err }
-  err = outcome.Assert(*fields.Outcome);               if err != nil { return nil, err }
-  err = paceAdjust.Assert(*fields.PaceAdjust);         if err != nil { return nil, err }
-  err = period.Assert(*fields.Period);                 if err != nil { return nil, err }
-  err = perMode.Assert(*fields.PerMode);               if err != nil { return nil, err }
-  err = plusMinus.Assert(*fields.PlusMinus);           if err != nil { return nil, err }
-  err = pORound.Assert(*fields.PORound);               if err != nil { return nil, err }
-  err = rank.Assert(*fields.Rank);                     if err != nil { return nil, err }
-  err = season.Assert(*fields.Season);                 if err != nil { return nil, err }
-  err = seasonSegment.Assert(*fields.SeasonSegment);   if err != nil { return nil, err }
-  err = seasonType.Assert(*fields.SeasonType);         if err != nil { return nil, err }
-  err = shotClockRange.Assert(*fields.ShotClockRange); if err != nil { return nil, err }
-  err = split.Assert(*fields.Split);                   if err != nil { return nil, err }
-  err = vsConference.Assert(*fields.VsConference);     if err != nil { return nil, err }
-  err = vsDivision.Assert(*fields.VsDivision);         if err != nil { return nil, err }
+  err := teamID.Assert(fields.TeamID, true);                  if err != nil { return nil, err }
+  err = dateFrom.Assert(*fields.DateFrom, false);             if err != nil { return nil, err }
+  err = dateTo.Assert(*fields.DateTo, false);                 if err != nil { return nil, err }
+  err = gameSegment.Assert(*fields.GameSegment, false);       if err != nil { return nil, err }
+  err = lastNGames.Assert(*fields.LastNGames, false);         if err != nil { return nil, err }
+  err = leagueID.Assert(*fields.LeagueID, false);             if err != nil { return nil, err }
+  err = location.Assert(*fields.Location, false);             if err != nil { return nil, err }
+  err = measureType.Assert(*fields.MeasureType, false);       if err != nil { return nil, err }
+  err = month.Assert(*fields.Month, false);                   if err != nil { return nil, err }
+  err = opponentTeamID.Assert(*fields.OpponentTeamID, false); if err != nil { return nil, err }
+  err = outcome.Assert(*fields.Outcome, false);               if err != nil { return nil, err }
+  err = paceAdjust.Assert(*fields.PaceAdjust, false);         if err != nil { return nil, err }
+  err = period.Assert(*fields.Period, false);                 if err != nil { return nil, err }
+  err = perMode.Assert(*fields.PerMode, false);               if err != nil { return nil, err }
+  err = plusMinus.Assert(*fields.PlusMinus, false);           if err != nil { return nil, err }
+  err = pORound.Assert(*fields.PORound, false);               if err != nil { return nil, err }
+  err = rank.Assert(*fields.Rank, false);                     if err != nil { return nil, err }
+  err = season.Assert(*fields.Season, false);                 if err != nil { return nil, err }
+  err = seasonSegment.Assert(*fields.SeasonSegment, false);   if err != nil { return nil, err }
+  err = seasonType.Assert(*fields.SeasonType, false);         if err != nil { return nil, err }
+  err = shotClockRange.Assert(*fields.ShotClockRange, false); if err != nil { return nil, err }
+  err = split.Assert(*fields.Split, false);                   if err != nil { return nil, err }
+  err = vsConference.Assert(*fields.VsConference, false);     if err != nil { return nil, err }
+  err = vsDivision.Assert(*fields.VsDivision, false);         if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",

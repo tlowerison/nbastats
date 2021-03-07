@@ -15,9 +15,9 @@ func (c *NbaStatsClient) Scoreboard(fields *ScoreboardFields) (*model.Result, er
   if fields.LeagueID == nil  { fields.LeagueID  = &leagueID.Default }
 
   // Validate
-  err := dayOffset.Assert(*fields.DayOffset); if err != nil { return nil, err }
-  err = gameDate.Assert(fields.GameDate);     if err != nil { return nil, err }
-  err = leagueID.Assert(*fields.LeagueID);    if err != nil { return nil, err }
+  err := gameDate.Assert(fields.GameDate, true);    if err != nil { return nil, err }
+  err = dayOffset.Assert(*fields.DayOffset, false); if err != nil { return nil, err }
+  err = leagueID.Assert(*fields.LeagueID, false);   if err != nil { return nil, err }
 
   bytes, err := c.Get(model.FetchConfig{
     DataSource: "stats.nba.com",

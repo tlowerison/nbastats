@@ -1,2 +1,6 @@
+*    # Ignore all
+!*.* # Unignore all with extensions
+!*/  # Unignore all dirs
+
+# Ignored
 **/.DS_STORE
-nbapi

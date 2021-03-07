@@ -137,7 +137,7 @@ func (body rotowireResponseBody) UnmarshalResult(bytes []byte) (*model.Result, e
 
 func (c *NbaStatsClient) TeamNews(fields *TeamNewsFields) (*model.Result, error) {
   // Validate
-  err := teamID.Assert(fields.TeamID); if err != nil { return nil, err }
+  err := teamID.Assert(fields.TeamID, true); if err != nil { return nil, err }
   if _, ok := teamIDToName[fields.TeamID]; !ok {
     return nil, fmt.Errorf("Invalid TeamID, received: %s", fields.TeamID)
   }
