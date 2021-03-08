@@ -15,16 +15,20 @@ type DataSource struct {
 }
 
 type Result struct {
-  Headers []string        `json:"headers"`
-  Rows    [][]interface{} `json:"rowSet"`
+  Headers    []string        `json:"headers"`
+  Rows       [][]interface{} `json:"rowSet"`
+  HideHeader bool
 }
 
 func (r *Result) String() string {
   if r == nil {
     return ""
   }
+  output := ""
   separator := "\t"
-  output := strings.Join(r.Headers, separator)
+  if !r.HideHeader {
+    output = strings.Join(r.Headers, separator) + "\n"
+  }
   strRows := make([]string, len(r.Rows))
   for i, row := range r.Rows {
     strRow := make([]string, len(row))
@@ -33,11 +37,11 @@ func (r *Result) String() string {
     }
     strRows[i] = strings.Join(strRow, separator)
   }
-  if len(strRows) > 0 {
+  output += strings.Join(strRows, "\n")
+  if len(output) > 0 && string(output[len(output) - 1]) != "\n" {
     output += "\n"
   }
-  output += strings.Join(strRows, "\n")
-  return output + "\n"
+  return output
 }
 
 type FetchFunc func(fields map[string]interface{}) (*Result, error)
